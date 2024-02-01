@@ -1,0 +1,32 @@
+# # # HDD CleanUP Project # # #
+#Requires -RunAsAdministrator
+
+# Program to clear up temp files, folders, Eventlogs, and also turns off Hibernation
+# v2 update notes: cleared up comments for easier readability
+
+
+#Sets $tempFolder varaible
+
+$tempFolders = @(
+    "C:\Temp\*",
+    "C:\Windows\ccmcache\*",
+    "C:\Windows\Temp\*",
+    "C:\Windows\Prefetch\*",
+    "C:\Documents and Settings\*\Local Settings\temp\*",
+    "C:\Users\*\AppData\Local\Temp\*"
+    "C:\windows\logs\CBS\*"
+    "C:\anyconnect*"
+    "C:\elastic*"
+) 
+
+
+# Removes all items not being currently in use from the $tempfolders variable
+Remove-Item $tempFolders -force -recurse 
+
+# turns off Hibernation
+powercfg -h off 
+
+# Clears Eventlogs for Application, System, and Security
+Clear-EventLog Application
+Clear-EventLog System
+Clear-EventLog Security
